@@ -1,0 +1,29 @@
+#include <iostream>
+#include <thread>
+#include <mutex>
+#include <unistd.h>
+
+using namespace std;
+
+mutex mtx;
+
+void foo(int a) {
+    sleep(5);
+
+    lock_guard<mutex> lock(mtx);
+    cout << a << endl;
+}
+
+int main() {
+    thread threads[20];
+
+    for (int i = 0; i < 20; i++) {
+        threads[i] = thread(foo, i);
+    }
+
+    for (int i = 0; i < 20; i++) {
+        threads[i].join();
+    }
+
+    return 0;
+}
