@@ -23,3 +23,13 @@ In this task, I used a synchronized block inside the "baz()" method.
 The variable "bar" is shared by both threads because both threads use the same Foo object.
 The block "synchronized(this)" uses the current object as a lock. Since both threads use the same object f, only one thread can enter this synchronized block at a time.
 As a result, the increment operation is protected, no updates are lost, and the output is 20000.
+
+
+Task 6:
+In this task, I ran the program with 10 threads without using "synchronized".
+Each thread calls "baz()" 10,000,000 times.
+The expected mathematical result is 100,000,000, because there are 10 threads and each one performs 10,000,000 increments.
+However, the actual result is 26001612, because "bar++" is not atomic.
+It includes reading the value, incrementing it, and writing it back. Since several threads access "bar" at the same time, some updates are lost.
+This is a race condition.
+The second number in the output is the running time in milliseconds. In our case, 66 milliseconds.
